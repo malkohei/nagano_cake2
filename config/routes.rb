@@ -7,11 +7,7 @@ Rails.application.routes.draw do
    resources :orders, only: [:show, :update]
   end
 
-  devise_for :admins, controller: {
-    sessions: 'admins/sessions',
-    registrations: 'admins/registrations',
-    passwords: 'admins/passwords'
-  }
+    devise_for :admins, path: 'admin'
 
   get '/admin' => 'homes#top'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
