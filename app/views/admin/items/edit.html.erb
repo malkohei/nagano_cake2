@@ -1,2 +1,45 @@
-<h1>Admin::Items#edit</h1>
-<p>Find me in app/views/admin/items/edit.html.erb</p>
+<div class="container">
+  <div class="form-horizontal">
+    <h3 style="margin-bottom: 20px; border-left: 2px solid #2D6F4C; padding: 10px;">商品編集</h3>
+    <%= form_with model: @item, url:admin_item_path, local:true do |f| %>
+
+      <div class="form-group">
+        <label>商品画像</label>
+        <div class="col-sm-3">
+          <%= f.attachment_field :image %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>商品名</label>
+        <div class="col-sm-6">
+          <%= f.text_field :name, class:"form-control", id:"InputName", autocomplete: "name" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>商品説明</label>
+        <div class="col-sm-6">
+          <%= f.text_area :introduction, class:"form-control", id:"InputIntroduction", autocomplete: "introduction", row: 10 %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>税抜価格</label>
+        <div class="col-sm-2">
+          <%= f.text_field :price, autofocus: true, autocomplete: "price" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>販売ステータス</label>
+        <%= f.select :is_active,{販売中:false, 販売停止:true} %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "変更を保存", class:'btn btn-success btn-md' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
