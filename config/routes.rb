@@ -7,10 +7,16 @@ Rails.application.routes.draw do
    resources :orders, only: [:show, :update]
   end
 
-devise_for :admins, controllers: {
+  devise_for :admins, controllers: {
     registrations: 'admins/registrations',
     sessions: 'admins/sessions',
     passwords: 'admins/passwords'
+  }
+
+  devise_for :customers, controllers: {
+    registrations: 'customers/registrations',
+    sessions: 'customers/sessions',
+    passwords: 'customers/passwords'
   }
 
   get '/admin' => 'homes#top'
