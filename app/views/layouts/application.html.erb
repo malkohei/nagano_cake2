@@ -16,11 +16,110 @@
           <%#--urlに'admin'が入ってるかどうか--%>
           <% if request.url.include?('admin') %>
             <%#--'admin'だった場合 %>
-            
-            
-            
+            <%= link_to url: "/admin" do %>
+              <%= image_tag 'header-logo.png', :size => '230x80' %>
+            <% end %>
+          <% else %>
+            <%# 会員側だった場合 %>
+            <%= link_to url: "/" do %>
+              <%= image_tag 'header-logo.png', :size => '230x80' %>
+            <% end %>
           <% end %>
-            
+        </nav>
+        
+        <nav class="clearfix">
+          <ul class="nav justify-content-end">
+            <% if request.url.include?('admin') %>
+              <% if admins_signed_in? %>
+                <li class="nav-item">
+                  <%= link_to admin_items_path do %>
+                    <button type="button" class="btn btn-outline-secondary">商品一覧</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to admin_customers_path do %>
+                    <button type="button" class="btn btn-outline-secondary">会員一覧</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to url: "/admin" do %>
+                    <button type="button" class="btn btn-outline-secondary">注文履歴一覧</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to destroy_admins_session_path, method: :delete do %>
+                    <button type="button" class="btn btn-outline-secondary">ログアウト</button>
+                  <% end %>
+                </li>
+              <% else %>
+                <li class="nav-item">
+                  <%= link_to about_path do %>
+                    <button type="button" class="btn btn-outline-secondary">About</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to items_path do %>
+                    <button type="button" class="btn btn-outline-secondary">商品一覧</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to new_customer_registration_path do %>
+                    <button type="button" class="btn btn-outline-secondary">新規登録</button>
+                  <% end %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to new_customer_session_path do %>
+                    <button type="button" class="btn btn-outline-secondary">ログイン</button>
+                  <% end %>
+                </li>
+              <% end %>
+            <% elsif customer_signed_in? %>
+              <li>
+                ようこそ、<%= current_customer.first_name %>さん！
+              </li>
+              <li class="nav-item">
+                  <%= link_to customer_path(@customer.id) do %>
+                    <button type="button" class="btn btn-outline-secondary">マイページ</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to items_path do %>
+                    <button type="button" class="btn btn-outline-secondary">商品一覧</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to cart_items_path do %>
+                    <button type="button" class="btn btn-outline-secondary">カート</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to destroy_customer_session_path, method: :delete do %>
+                    <button type="button" class="btn btn-outline-secondary">ログアウト</button>
+                  <% end %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                  <%= link_to about_path do %>
+                    <button type="button" class="btn btn-outline-secondary">About</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to items_path do %>
+                    <button type="button" class="btn btn-outline-secondary">商品一覧</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to new_customer_registration_path do %>
+                    <button type="button" class="btn btn-outline-secondary">新規登録</button>
+                  <% end %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to new_customer_session_path do %>
+                    <button type="button" class="btn btn-outline-secondary">ログイン</button>
+                  <% end %>
+              </li>
+            <% end %>
+          </ul>
         </nav>
       </div>
     </header>
