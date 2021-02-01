@@ -7,4 +7,35 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:last_name, :first_name, :last_name_kana, :first_name_kana, :postal_code, :address, :telephone_number, :email, :is_deleted])
   end
 
+  def after_sign_in_path_for(resource)
+
+    case resource
+    when Customer
+      root_path
+    when Admins
+      admin_path
+    end
+  end
+
+  def after_sign_up_path_for(resource)
+    s
+    case resource
+    when Customer
+      customer_path(@customer.id)
+    end
+  end
+  
+  def after_sign_out_path_for(resource)
+    # p "----------------------"
+    # p resource
+    case resource
+    when :customer
+      # p "-------------------------"
+      root_path
+    when :admins
+      # p "========================"
+      new_admin_user_session_path
+    end
+  end
+
 end

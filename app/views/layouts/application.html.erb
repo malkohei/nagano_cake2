@@ -16,17 +16,17 @@
           <%#--urlに'admin'が入ってるかどうか--%>
           <% if request.url.include?('admin') %>
             <%#--'admin'だった場合 %>
-            <%= link_to url: "/admin" do %>
+            <%= link_to admin_path do %>
               <%= image_tag 'header-logo.png', :size => '230x80' %>
             <% end %>
           <% else %>
             <%# 会員側だった場合 %>
-            <%= link_to url: "/" do %>
+            <%= link_to root_path do %>
               <%= image_tag 'header-logo.png', :size => '230x80' %>
             <% end %>
           <% end %>
         </nav>
-        
+
         <nav class="clearfix">
           <ul class="nav justify-content-end">
             <% if request.url.include?('admin') %>
@@ -78,7 +78,7 @@
                 ようこそ、<%= current_customer.first_name %>さん！
               </li>
               <li class="nav-item">
-                  <%= link_to customer_path(@customer.id) do %>
+                  <%= link_to customer_path(current_customer.id) do %>
                     <button type="button" class="btn btn-outline-secondary">マイページ</button>
                   <% end %>
               </li>
