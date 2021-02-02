@@ -1,2 +1,30 @@
-<h1>Public::Items#show</h1>
-<p>Find me in app/views/public/items/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <%= attachment_image_tag @item, :image, format: 'jpeg', fallback: "logo.png", size: 300 %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <div>
+        <h2><strong><%= @item.name %></strong></h2><br />
+        <h3><%= @item.introduction %></h3><br />
+        <% if @item.is_active == false %>
+          <h2><%= number_to_currency(@item.price * 1.08, unit: "￥", strip_insignificant_zeros: true) %>(税込)</h2><br/>
+        <% else %>
+          <h2 class="text-danger"><strong>Sold Out</strong></h2><br />
+        <% end %>
+
+        <%# 販売中か売り切れかで表示のon,off %>
+
+        <% if @item.is_active == false %>
+          <%= form_with model: @cart_item, url: cart_items_path, local:true do |f| %>
+            <%= f.hidden_field :item_id, value: @item.id %>
+            <%= f.number_field :amount, placeholder: "個数選択",class: 'btn btn-default btn-outline-dark',min: 1 %>
+            <%= f.submit 'カートにいれる',class: 'btn btn-success' %>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -18,13 +18,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_up_path_for(resource)
-    s
+
     case resource
     when Customer
       customer_path(@customer.id)
     end
   end
-  
+
   def after_sign_out_path_for(resource)
     # p "----------------------"
     # p resource
