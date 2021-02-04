@@ -1,2 +1,36 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="bg-secondary text-white">
+            <p>ようこそ、ながのCAKEへ！</p>
+            <p>このサイトは、ケーキ販売のECサイトになります。</p>
+            <p>会員でない方も商品の閲覧はできますが、</p>
+            <p>購入には会員登録が必要になります。</p>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <h3><strong>新着商品</strong></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @items.each do |item| %>
+      <div class="col-md-3 mx-0.5">
+        <%= link_to item_path(item.id) do %>
+          <%= attachment_image_tag item, :image, format: 'jpg', fallback: "logo.png", size:'150x150' %><br />
+        <% end %>
+          <%= item.name %><br />
+          <%= number_to_currency(item.price, unit: "￥", strip_insignificant_zeros: true) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 offset-md-10">
+      <%= link_to '全ての商品を見る', items_path %>
+    </div>
+  </div>
+</div>

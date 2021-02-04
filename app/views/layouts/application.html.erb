@@ -30,7 +30,7 @@
         <nav class="clearfix">
           <ul class="nav justify-content-end">
             <% if request.url.include?('admin') %>
-              <% if admins_signed_in? %>
+              <% if admin_signed_in? %>
                 <li class="nav-item">
                   <%= link_to admin_items_path do %>
                     <button type="button" class="btn btn-outline-secondary">商品一覧</button>
@@ -47,7 +47,7 @@
                   <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to destroy_admins_session_path, method: :delete do %>
+                  <%= link_to destroy_admin_session_path, method: :delete do %>
                     <button type="button" class="btn btn-outline-secondary">ログアウト</button>
                   <% end %>
                 </li>
