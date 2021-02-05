@@ -8,4 +8,5 @@ class CreateCartItems < ActiveRecord::Migration[5.2]
       t.timestamps
     end
   end
+  add_index :cart_items, :customer_id
 end

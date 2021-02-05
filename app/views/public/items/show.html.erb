@@ -17,7 +17,7 @@
         <%# 販売中か売り切れかで表示のon,off %>
 
         <% if @item.is_active == false %>
-          <%= form_with model: @cart_item, url: cart_items_path, local:true do |f| %>
+          <%= form_for(@cart_item, url: cart_items_path) do |f| %>
             <%= f.hidden_field :item_id, value: @item.id %>
             <%= f.number_field :amount, placeholder: "個数選択",class: 'btn btn-default btn-outline-dark',min: 1 %>
             <%= f.submit 'カートにいれる',class: 'btn btn-success' %>
