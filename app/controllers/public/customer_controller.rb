@@ -20,7 +20,7 @@ class Public::CustomerController < ApplicationController
 
   def out
     @customer = current_customer
-    @user.update(is_deleted: true)
+    @customer.update(is_deleted: true)
     reset_session
     flash[:notice] = "ありがとうございました。またのご利用をお待ちしております。"
     redirect_to root_path

@@ -21,7 +21,8 @@
           <th></th>
         </tr>
       </thead>
-      <% @cart_items.each do |item| %>
+     <% sum = 0 %>
+      <% @cart_items.each do |cart_item| %>
         <tbody>
           <tr>
             <td>
@@ -29,7 +30,7 @@
               <%= cart_item.item.name %>
             </td>
             <td>
-              <%= number_to_currency(cart_item.item.price * 1.08, unit: "￥", strip_insignificant_zeros: true) %>
+              <%= number_to_currency(cart_item.item.price * 1.1, unit: "￥", strip_insignificant_zeros: true) %>
             </td>
             <td>
               <%= form_for(cart_item) do |f| %>
@@ -38,7 +39,7 @@
               <% end %>
             </td>
             <td>
-              <%= number_to_currency(cart_item.item.price * cart_item.amount * 1.08, unit: "￥", strip_insignificant_zeros: true) %>
+              <%= number_to_currency(subtotal_price = cart_item.item.price * cart_item.amount * 1.1, unit: "￥", strip_insignificant_zeros: true) %>
             </td>
             <td>
               <%= link_to cart_item_path(cart_item.id), method: :delete do %>
@@ -47,6 +48,7 @@
             </td>
           </tr>
         </tbody>
+        <% sum = sum + subtotal_price %>
       <% end %>
     </table>
   </div>
@@ -62,7 +64,7 @@
         <tr>
           <td>合計金額</td>
           <td>
-            <%= number_to_currency(@cart_items.map{ |cp| (cp.item.price * cp.amount * 1.08)}, unit: "￥", strip_insignificant_zeros: true) %>円
+            <strong>¥ <%= sum.floor %></strong>
           </td>
         </tr>
       </table>

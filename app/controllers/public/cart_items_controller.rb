@@ -2,18 +2,14 @@ class Public::CartItemsController < ApplicationController
     before_action :authenticate_customer!
 
   def index
-    @cart_items = CartItem.where(customer_id: current_customer.id)
+    @cart_items = current_customer.cart_items
   end
 
   def create
-    @cart_item = CartItem.new(item_params)
+    @cart_item = CartItem.new(cart_item_params)
     @cart_item.customer_id = current_customer.id
-    if @cart_item.save
-      redirect_to cart_items_path
-    else
-      @item = Item.find(@cart_item.item_id)
-      render 'public/items/show'
-    end
+    @cart_item.save
+    redirect_to cart_items_path
   end
 
   def update
