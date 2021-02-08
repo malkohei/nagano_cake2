@@ -1,2 +1,54 @@
-<h1>Public::Orders#new</h1>
-<p>Find me in app/views/public/orders/new.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>注文情報確認</h3>
+    </div>
+  </div>
+  <%= form_for(@order) do |f| %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <h4><strong>支払方法</strong></h4>
+          <label><%= f.radio_button :payment_method, :クレジットカード %>クレジットカード</label><br />
+          <label><%= f.radio_button :payment_method, :銀行振込 %>銀行振込</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <h4><strong>お届け先</strong></h4>
+
+          <label><%= radio_button_tag :address_type, 0 %>ご自身の住所</label>
+          <label>〒<%= current_customer.postal_code %> <%= current_customer.address %></label><br />
+          <label><%= current_customer.last_name %><%= current_customer.first_name %></label>
+          <br />
+          <label><%= radio_button_tag :address_type, 1 %>新しいお届け先</label>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <td>郵便番号(ハイフンなし)</td>
+                <td><%= f.text_field :postal_code, value:nil %></td>
+              </tr>
+              <tr>
+                <td>住所</td>
+                <td colspan="2"><%= f.text_field :address, value:nil %></td>
+              </tr>
+              <tr>
+                <td>宛名</td>
+                <td><%= f.text_field :name, value:nil %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <%= f.submit '確認画面へ進む', class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
