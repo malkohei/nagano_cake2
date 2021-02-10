@@ -9,15 +9,14 @@ class Customers::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-   def create
-     @customer = Customer.find_by(email: sign_in_params[:email])
-     if @customer.is_deleted == false
-        flash[:error] = "退会済みのユーザーです。お手数ですがもう一度最初からやり直してください。"
-        redirect_to root_path
-     else
-       super
-     end
-   end
+  def configure_sign_in_params
+    @customer = Customer.find_by(email: params[:customer][:email])
+    if @customer.is_deleted?
+    else
+      flash[:notice] = "退会済みユーザのためログイン出来ません"
+      redirect_to root_path
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
