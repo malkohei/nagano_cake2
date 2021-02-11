@@ -6,27 +6,39 @@ class Public::OrdersController < ApplicationController
     @order = current_customer.orders.new
   end
 
-  def create
-    @order = current_customer.orders.new(order_params)
-    case params[:address_type]
-    when "0"
-      @order.postal_code = current_customer.postal_code
-      @order.address = current_customer.address
-      @order.name = current_customer.last_name + current_customer.first_name
-    end
-    if @order.save
-      redirect_to confirmation_order_path(@order)
-    end
-  end
-
-  def confirmation
-    @order = Order.find(params[:id])
-    @cart_items = current_customer.cart_items
-  end
-
   def confirm
-    @order = Order.find(params[:id])
+    @order = current_customer.orders.new
     @cart_items = current_customer.cart_items
+    session[:order] = Order.new()
+    session[:order][:customer_id] = current_customer.id
+    session[:order][:payment_method] = params[:order][:payment_method]
+    case params[:selected_status]
+    when "0"
+      session[:order][:postal_code] = current_customer.postal_code
+      session[:order][:address] = current_customer.address
+      session[:order][:name] = current_customer.last_name + current_customer.first_name
+    end
+  end
+
+  def create
+    @order = Order.new(session[:order])
+    cart_items = current_customer.cart_items
+
+    sum = 0
+    sub_total = 0
+
+    cart_items.each do |cart_item|
+      (cart_item.item.price * 1.1).round
+      (cart_item.item.price * 1.1).round * cart_item.amount
+      sub_total+=(cart_item.item.price * 1.1).round * cart_item.amount
+      sum+=sub_total
+      sum = sub_total + @order.shipping_cost
+    end
+
+    @order.total_payment = sum
+    @order.save!
+
+
     if @order.save!
       current_customer.cart_items.each do |cart_item|
         @order_details = OrderDetail.new(
@@ -42,19 +54,28 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
+    session[:order].clear
   end
 
   def index
-    @orders = current_customer.orders
+    @orders = Order.where(customer_id: current_customer.id)
   end
 
   def show
+    @order = Order.find(params[:id])
+  end
+
+  def destroy
+    @order = Order.find(params[:id])
+    @order.destroy
+    redirect_to orders_path
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:customer_id, :postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method, :status)
+    params.require(:order).permit(:customer_id, :postal_code, :address, :name, :shipping_cost, :total_payment, :payment_method, :status,
+                                  :selected_status => [ 0 , 1 ])
   end
 
 end

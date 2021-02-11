@@ -60,13 +60,13 @@
         <table class="table table-borderless">
           <tr>
             <td><h4><strong>支払方法</strong></h4></td>
-            <td><%= @order.payment_method %></td>
+            <td><%= session[:order][:payment_method] %></td>
           </tr>
           <tr>
             <td><h4><strong>お届け先</strong></h4></td>
             <td>
-              〒 <%= @order.postal_code %> <%= @order.address %><br />
-              <%= @order.name %>
+              〒 <%= session[:order][:postal_code]%> <%= session[:order][:address]%><br />
+              <%= session[:order][:name]%>
             </td>
           </tr>
         </table>
@@ -75,7 +75,7 @@
 
     <div class="row">
       <div class="col-md-4 offset-md-4">
-        <%= link_to confirm_order_path(@order), method: :post do %>
+        <%= link_to orders_path, method: :post do %>
           <button type="button" class="btn btn-success">注文を確定する</button>
         <% end %>
       </div>

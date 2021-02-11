@@ -9,7 +9,7 @@
         <h2><strong><%= @item.name %></strong></h2><br />
         <h3><%= @item.introduction %></h3><br />
         <% if @item.is_active == false %>
-          <h2><%= number_to_currency(@item.price * 1.08, unit: "￥", strip_insignificant_zeros: true) %>(税込)</h2><br/>
+          <h2><%= number_to_currency(@item.price * 1.1, unit: "￥", strip_insignificant_zeros: true) %>(税込)</h2><br/>
         <% else %>
           <h2 class="text-danger"><strong>Sold Out</strong></h2><br />
         <% end %>

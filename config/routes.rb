@@ -17,12 +17,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :orders, only: [:new, :create, :index, :show] do
-      member do
-        get 'confirmation'
-        post 'confirm'
-      end
+    resources :orders, only: [:new, :create, :index, :show, :destroy] do
       collection do
+        post 'confirm'
         get 'thanks'
       end
     end

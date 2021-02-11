@@ -39,7 +39,7 @@
               <% end %>
             </td>
             <td>
-              <%= number_to_currency(subtotal_price = cart_item.item.price * cart_item.amount * 1.1, unit: "￥", strip_insignificant_zeros: true) %>
+              <%= sub_total = (cart_item.item.price * 1.1).round.to_i * cart_item.amount.to_i %>
             </td>
             <td>
               <%= link_to cart_item_path(cart_item.id), method: :delete do %>
@@ -48,7 +48,7 @@
             </td>
           </tr>
         </tbody>
-        <% sum = sum + subtotal_price %>
+        <% sum = sum + sub_total %>
       <% end %>
     </table>
   </div>

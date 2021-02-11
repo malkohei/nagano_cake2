@@ -4,7 +4,7 @@
       <h3>注文情報確認</h3>
     </div>
   </div>
-  <%= form_for(@order) do |f| %>
+  <%= form_for(@order, url: confirm_orders_path, method: :post) do |f| %>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -20,11 +20,11 @@
         <div class="form-group">
           <h4><strong>お届け先</strong></h4>
 
-          <label><%= radio_button_tag :address_type, 0 %>ご自身の住所</label>
-          <label>〒<%= current_customer.postal_code %> <%= current_customer.address %></label><br />
-          <label><%= current_customer.last_name %><%= current_customer.first_name %></label>
+          <label><%= radio_button_tag :selected_status, "0" %>ご自身の住所</label>
+          <label>〒<%= f.label current_customer.postal_code %> <%= f.label current_customer.address %></label><br />
+          <label><%= f.label current_customer.last_name %><%= f.label current_customer.first_name %></label>
           <br />
-          <label><%= radio_button_tag :address_type, 1 %>新しいお届け先</label>
+          <label><%= radio_button_tag :selected_status, "1" %>新しいお届け先</label>
           <table class="table table-borderless">
             <tbody>
               <tr>
