@@ -17,6 +17,10 @@ class Public::OrdersController < ApplicationController
       session[:order][:postal_code] = current_customer.postal_code
       session[:order][:address] = current_customer.address
       session[:order][:name] = current_customer.last_name + current_customer.first_name
+    when "1"
+      session[:order][:postal_code] = params[:order][:postal_code]
+      session[:order][:address] = params[:order][:address]
+      session[:order][:name] = params[:order][:name]
     end
   end
 

@@ -27,11 +27,11 @@
             <td><strong>支払方法</strong></td>
             <td><%= @order.payment_method %></td>
           </tr>
-          <%= form_for(@order, url: admin_order_path(@order)) do |f| %>
+          <%= form_with model: @order, url:admin_path, local:true do |f| %>
             <tr>
               <td><strong>注文ステータス</strong></td>
               <td>
-                <%= f.select :status, Order.statuses.keys,{} %>
+                <%= f.select :status, [["入金待ち",0],["入金確認",1],["製作中",2],["発送準備中",3],["発送済み",4]] %>
                 <%= f.submit '更新', class: "btn btn-success" %>
               </td>
             </tr>
@@ -50,7 +50,6 @@
             <th>単価(税込)</th>
             <th>数量</th>
             <th>小計</th>
-            <th>製作ステータス</th>
           </tr>
         </thead>
         <% @order_details.each do |order_detail| %>
@@ -60,12 +59,6 @@
               <td><%= (order_detail.item.price * 1.1).round.to_i %></td>
               <td><%= order_detail.amount %></td>
               <td><%= (order_detail.item.price * 1.1).round.to_i * order_detail.amount.to_i %></td>
-              <td>
-                <%= form_for(order_detail, url: admin_making_status_update_path(order_detail.id), method: :patch) do |f| %>
-                  <%= f.select :making_status, OrderDetail.making_statuses.keys,{} %>
-                  <%= f.submit '更新', class: "btn btn-success" %>
-                <% end %>
-              </td>
             </tr>
           </tbody>
         <% end %>
