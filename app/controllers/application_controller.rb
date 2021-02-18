@@ -32,9 +32,9 @@ class ApplicationController < ActionController::Base
     when :customer
       # p "-------------------------"
       root_path
-    when :admins
+    when :admin
       # p "========================"
-      new_admin_user_session_path
+      new_admin_session_path
     end
   end
 

@@ -9,8 +9,10 @@ class Admin::ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @item.save
-    redirect_to admin_item_path(@item.id)
+    if @item.save
+      flash[:success] = "商品を追加しました。"
+      redirect_to admin_item_path(@item.id)
+    end
   end
 
   def show
@@ -23,8 +25,10 @@ class Admin::ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    @item.update(item_params)
-    redirect_to admin_item_path
+    if @item.update(item_params)
+      flash[:success] = "商品情報を更新しました。"
+      redirect_to admin_item_path
+    end
   end
 
   private
